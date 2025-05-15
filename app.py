@@ -7,13 +7,12 @@ import base64
 
 app = Flask(__name__)
 
-# Hafif model: BLIP base
-processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base", use_fast=False)
 model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
 @app.route("/")
 def home():
-    return "✅ Masal API ayakta."
+    return "✅ Masal API Çalışıyor"
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -30,6 +29,7 @@ def predict():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ✅ Render için dış dünyaya açık port
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    import os
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
