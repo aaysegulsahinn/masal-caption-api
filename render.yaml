@@ -1,10 +1,11 @@
 services:
   - type: web
     name: masal-caption-api
-    runtime: python
+    env: python
     buildCommand: ""
     startCommand: "python app.py"
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.10
-    autoDeploy: true
+      - key: PORT
+        value: 10000
+
+
